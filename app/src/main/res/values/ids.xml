@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="TOP_IMLK_UNDO_INJECTED_TAG"></item>
+    <item type="id" name="TOP_IMLK_UNDO_IUNDOMANAGER_TAG"></item>
+    <item type="id" name="TOP_IMLK_UNDO_SHOULDDO_TAG"></item>
+    <item type="id" name="menu_undo"></item>
+    <item type="id" name="menu_redo"></item>
+
+</resources>
