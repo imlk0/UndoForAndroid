@@ -20,4 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep public class top.imlk.qqChatPic.hooker.Injecter
+-keep public class top.imlk.undo.hooker.Injecter

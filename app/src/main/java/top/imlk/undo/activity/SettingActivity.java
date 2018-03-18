@@ -48,6 +48,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.tv_donate_wechat).setOnClickListener(this);
         findViewById(R.id.tv_donate_alipay).setOnClickListener(this);
         findViewById(R.id.tv_link_github).setOnClickListener(this);
+        findViewById(R.id.tv_link_github_license).setOnClickListener(this);
 
     }
 
@@ -99,6 +100,9 @@ public class SettingActivity extends Activity implements View.OnClickListener {
             case R.id.tv_link_github:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid")));
                 break;
+            case R.id.tv_link_github_license:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid/blob/master/LICENSE")));
+                break;
         }
     }
 
@@ -106,13 +110,13 @@ public class SettingActivity extends Activity implements View.OnClickListener {
     private void checkPermissions() {
 
 
-        Toast.makeText(SettingActivity.this, "需要读写文件权限", Toast.LENGTH_LONG).show();
 
         int permission_0 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
         int permission_1 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permission_2 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
 
         if (permission_0 != PackageManager.PERMISSION_GRANTED || permission_1 != PackageManager.PERMISSION_GRANTED || permission_2 != PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(SettingActivity.this, "需要读写文件权限", Toast.LENGTH_LONG).show();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS}, 1);
             }

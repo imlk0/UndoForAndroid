@@ -2,41 +2,21 @@ package top.imlk.undo.hooker;
 
 
 import android.content.Context;
-import android.content.res.XModuleResources;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.View;
 import android.widget.EditText;
 
-import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import top.imlk.undo.R;
 import top.imlk.undo.callback.IActionModeCallbackProxy;
 import top.imlk.undo.listener.ITextChangedListener;
-import top.imlk.undo.staticValue.IResources;
 
-public class Injecter implements IXposedHookLoadPackage, IXposedHookZygoteInit, IXposedHookInitPackageResources {
-
-    public static String MODULE_PATH = null;
-
-
-    @Override
-    public void initZygote(StartupParam startupParam) throws Throwable {
-        MODULE_PATH = startupParam.modulePath;
-    }
-
-
-    @Override
-    public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resparam) throws Throwable {
-        IResources.setResources(XModuleResources.createInstance(MODULE_PATH, resparam.res));
-    }
+public class Injecter implements IXposedHookLoadPackage{
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {

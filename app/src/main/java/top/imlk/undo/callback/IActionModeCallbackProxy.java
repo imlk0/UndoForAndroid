@@ -1,24 +1,13 @@
 package top.imlk.undo.callback;
 
 import android.annotation.SuppressLint;
-import android.content.res.XmlResourceParser;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Xml;
 import android.view.ActionMode;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import org.xmlpull.v1.XmlPullParser;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import top.imlk.undo.R;
-import top.imlk.undo.staticValue.IResources;
+
 import top.imlk.undo.undoUtil.IUndoManager;
 
 /**
@@ -43,12 +32,12 @@ public class IActionModeCallbackProxy implements ActionMode.Callback {
         boolean b2, b3;
 
         menu.add(Menu.NONE, R.id.menu_undo, 2,
-                IResources.getResources().getSystem().getIdentifier("undo", "string", "android"))
+                mEditText.getResources().getSystem().getIdentifier("undo", "string", "android"))
                 .setAlphabeticShortcut('z')
                 .setEnabled(b2 = IUndoManager.getIUndoManager(this.mEditText).canPerformUndo())
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.add(Menu.NONE, R.id.menu_redo, 3,
-                IResources.getResources().getSystem().getIdentifier("redo", "string", "android"))
+                mEditText.getResources().getSystem().getIdentifier("redo", "string", "android"))
                 .setEnabled(b3 = IUndoManager.getIUndoManager(this.mEditText).canPerformRedo())
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 

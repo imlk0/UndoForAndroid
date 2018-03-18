@@ -251,6 +251,41 @@
                     android:textSize="14sp" />
 
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/card_top_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="LICENSE"
+                    android:textColor="@color/color_text_title"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_link_github_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@drawable/card_bottom_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="GNU General Public License v3.0"
+                    android:textColor="@color/color_text_value"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
