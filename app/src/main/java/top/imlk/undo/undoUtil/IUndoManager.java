@@ -39,24 +39,31 @@ public class IUndoManager {
     public void performUndo() {
         if (canPerformUndo()) {
             IUndoOperation iUndoOperation = undoOperations.get(undoOperations.size() - 1);
+
+            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
             while (iUndoOperation != null) {
                 undoOperations.remove(undoOperations.size() - 1);
                 iUndoOperation.undo(this.mEditText);
                 redoOperations.add(iUndoOperation);
                 iUndoOperation = iUndoOperation.nextUndo;
             }
+            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
         }
     }
 
     public void performRedo() {
         if (canPerformRedo()) {
             IUndoOperation iUndoOperation = redoOperations.get(redoOperations.size() - 1);
+
+            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
             while (iUndoOperation != null) {
                 redoOperations.remove(redoOperations.size() - 1);
                 iUndoOperation.redo(this.mEditText);
                 undoOperations.add(iUndoOperation);
                 iUndoOperation = iUndoOperation.nextRedo;
             }
+            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
+
         }
     }
 

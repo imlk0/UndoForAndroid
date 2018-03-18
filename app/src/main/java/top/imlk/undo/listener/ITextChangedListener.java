@@ -44,10 +44,6 @@ public class ITextChangedListener implements TextWatcher {
 
             Log.e("Changed", "" + newIUndoOperation.time);
 
-            if (oldIUndoOperation != null && newIUndoOperation.time - oldIUndoOperation.time < 360) {
-                oldIUndoOperation.nextRedo = newIUndoOperation;
-                newIUndoOperation.nextUndo = oldIUndoOperation;
-            }
 
             newIUndoOperation.setStart(start);
             newIUndoOperation.setOldString(s.subSequence(start, start + count));
@@ -62,6 +58,12 @@ public class ITextChangedListener implements TextWatcher {
             newIUndoOperation.setNewString(s.subSequence(start, start + count));
 
             if (!(newIUndoOperation.getNewString() == null || newIUndoOperation.getOldString() == null || (newIUndoOperation.getNewString().length() == 0 && newIUndoOperation.getOldString().length() == 0))) {
+
+                if (oldIUndoOperation != null && newIUndoOperation.time - oldIUndoOperation.time < 360) {
+                    oldIUndoOperation.nextRedo = newIUndoOperation;
+                    newIUndoOperation.nextUndo = oldIUndoOperation;
+                }
+
                 IUndoManager.getIUndoManager(this.mEditText).addIUndoOperation(newIUndoOperation);
                 IUndoManager.getIUndoManager(this.mEditText).cleanAllRedo();
             }

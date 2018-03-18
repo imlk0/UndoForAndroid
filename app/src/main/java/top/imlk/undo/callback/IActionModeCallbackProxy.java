@@ -6,8 +6,10 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+
 import top.imlk.undo.R;
 
+import top.imlk.undo.holder.IResources;
 import top.imlk.undo.undoUtil.IUndoManager;
 
 /**
@@ -31,13 +33,15 @@ public class IActionModeCallbackProxy implements ActionMode.Callback {
         boolean b1 = mCallback.onCreateActionMode(mode, menu);
         boolean b2, b3;
 
-        menu.add(Menu.NONE, R.id.menu_undo, 2,
-                mEditText.getResources().getSystem().getIdentifier("undo", "string", "android"))
+        //由于第三方rom的修改，这里取消了取用系统字符串的做法
+        menu.add(Menu.NONE, R.id.menu_undo, 2, IResources.resources.getString(R.string.undo))
+//                mEditText.getResources().getSystem().getIdentifier("undo", "string", "android"))
                 .setAlphabeticShortcut('z')
                 .setEnabled(b2 = IUndoManager.getIUndoManager(this.mEditText).canPerformUndo())
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.add(Menu.NONE, R.id.menu_redo, 3,
-                mEditText.getResources().getSystem().getIdentifier("redo", "string", "android"))
+
+        menu.add(Menu.NONE, R.id.menu_redo, 3, IResources.resources.getString(R.string.redo))
+//                mEditText.getResources().getSystem().getIdentifier("redo", "string", "android"))
                 .setEnabled(b3 = IUndoManager.getIUndoManager(this.mEditText).canPerformRedo())
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
