@@ -21,6 +21,7 @@ public class IUndoManager {
         if (editText.getTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG) == null || (!(editText.getTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG) instanceof IUndoManager))) {
             editText.setTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG, new IUndoManager(editText));
         }
+
         return (IUndoManager) editText.getTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG);
     }
 
@@ -43,10 +44,16 @@ public class IUndoManager {
             mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
             while (iUndoOperation != null) {
                 undoOperations.remove(undoOperations.size() - 1);
-                iUndoOperation.undo(this.mEditText);
                 redoOperations.add(iUndoOperation);
+                iUndoOperation.undo(this.mEditText);
                 iUndoOperation = iUndoOperation.nextUndo;
             }
+
+            //取出最后一个iUndoOperation
+            iUndoOperation = redoOperations.get(redoOperations.size() - 1);
+
+            this.mEditText.setSelection(iUndoOperation.start + iUndoOperation.oldString.length());
+
             mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
         }
     }
@@ -58,10 +65,16 @@ public class IUndoManager {
             mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
             while (iUndoOperation != null) {
                 redoOperations.remove(redoOperations.size() - 1);
-                iUndoOperation.redo(this.mEditText);
                 undoOperations.add(iUndoOperation);
+                iUndoOperation.redo(this.mEditText);
                 iUndoOperation = iUndoOperation.nextRedo;
             }
+
+
+            //取出最后一个iUndoOperation
+            iUndoOperation = undoOperations.get(undoOperations.size() - 1);
+            this.mEditText.setSelection(iUndoOperation.start + iUndoOperation.newString.length());
+
             mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
 
         }

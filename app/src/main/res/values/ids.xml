@@ -2,6 +2,7 @@
 <resources>
     <item type="id" name="TOP_IMLK_UNDO_INJECTED_TAG"></item>
     <item type="id" name="TOP_IMLK_UNDO_IUNDOMANAGER_TAG"></item>
+    <item type="id" name="TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG"></item>
     <item type="id" name="TOP_IMLK_UNDO_SHOULDDO_TAG"></item>
     <item type="id" name="menu_undo"></item>
     <item type="id" name="menu_redo"></item>

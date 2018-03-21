@@ -20,7 +20,6 @@ public class ITextChangedListener implements TextWatcher {
 
     public ITextChangedListener(EditText mEditText) {
         this.mEditText = mEditText;
-        this.mEditText.setTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG, true);
     }
 
 
@@ -45,8 +44,8 @@ public class ITextChangedListener implements TextWatcher {
             Log.e("Changed", "" + newIUndoOperation.time);
 
 
-            newIUndoOperation.setStart(start);
-            newIUndoOperation.setOldString(s.subSequence(start, start + count));
+            newIUndoOperation.start = start;
+            newIUndoOperation.oldString = s.subSequence(start, start + count);
         } else {
             oldIUndoOperation = null;
         }
@@ -55,9 +54,9 @@ public class ITextChangedListener implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (shouldDo()) {
-            newIUndoOperation.setNewString(s.subSequence(start, start + count));
+            newIUndoOperation.newString = s.subSequence(start, start + count);
 
-            if (!(newIUndoOperation.getNewString() == null || newIUndoOperation.getOldString() == null || (newIUndoOperation.getNewString().length() == 0 && newIUndoOperation.getOldString().length() == 0))) {
+            if (!(newIUndoOperation.newString == null || newIUndoOperation.oldString == null || (newIUndoOperation.newString.length() == 0 && newIUndoOperation.oldString.length() == 0))) {
 
                 if (oldIUndoOperation != null && newIUndoOperation.time - oldIUndoOperation.time < 360) {
                     oldIUndoOperation.nextRedo = newIUndoOperation;

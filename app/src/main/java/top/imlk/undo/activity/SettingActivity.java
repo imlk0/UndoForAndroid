@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,13 +43,17 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         }
 
         ((TextView) findViewById(R.id.tv_title_donate)).setText(randomString());
+//        ((TextView) findViewById(R.id.tv_setting_show_ico)).setText(icoStatus());
+
         findViewById(R.id.tv_version).setOnClickListener(this);
         findViewById(R.id.tv_author_imlk).setOnClickListener(this);
         findViewById(R.id.tv_author_pdc).setOnClickListener(this);
         findViewById(R.id.tv_donate_wechat).setOnClickListener(this);
         findViewById(R.id.tv_donate_alipay).setOnClickListener(this);
+//        findViewById(R.id.tv_setting_show_ico).setOnClickListener(this);
         findViewById(R.id.tv_link_github).setOnClickListener(this);
         findViewById(R.id.tv_link_github_license).setOnClickListener(this);
+
 
     }
 
@@ -64,6 +69,14 @@ public class SettingActivity extends Activity implements View.OnClickListener {
 
         return strings[((int) (strings.length * Math.random())) % strings.length];
     }
+
+//    public String icoStatus() {
+//        if (getPackageManager().getComponentEnabledSetting(getComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+//            return "点击在启动器中隐藏应用图标";
+//        } else {
+//            return "点击在启动器中显示应用图标";
+//        }
+//    }
 
     @Override
     public void onClick(View v) {
@@ -94,9 +107,16 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 if (hasInstalledAlipayClient) {
                     AlipayDonate.startAlipayClient(this, "FKX093049UCVM4EEN8WV84");
                 }
-
                 Toast.makeText(SettingActivity.this, "蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT);
                 break;
+
+//            case R.id.tv_setting_show_ico:
+//                if (getPackageManager().getComponentEnabledSetting(getComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+//                    getPackageManager().setComponentEnabledSetting(getComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER, PackageManager.DONT_KILL_APP);
+//                } else {
+//                    getPackageManager().setComponentEnabledSetting(getComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
+//                }
+//                break;
             case R.id.tv_link_github:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid")));
                 break;
@@ -108,7 +128,6 @@ public class SettingActivity extends Activity implements View.OnClickListener {
 
 
     private void checkPermissions() {
-
 
 
         int permission_0 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);

@@ -7,18 +7,10 @@ import android.widget.EditText;
 import top.imlk.undo.R;
 
 public class IUndoOperation {
-    private int start;
+    public int start;
 
-    public CharSequence getOldString() {
-        return oldString;
-    }
-
-    public CharSequence getNewString() {
-        return newString;
-    }
-
-    private CharSequence oldString;
-    private CharSequence newString;
+    public CharSequence oldString;
+    public CharSequence newString;
 
     public long time;
 
@@ -53,15 +45,4 @@ public class IUndoOperation {
     }
 
 
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public void setOldString(CharSequence oldString) {
-        this.oldString = oldString;
-    }
-
-    public void setNewString(CharSequence newString) {
-        this.newString = newString;
-    }
 }
