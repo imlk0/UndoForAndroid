@@ -39,8 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp">
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -219,6 +219,72 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/card_top_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="设置"
+                    android:textColor="@color/color_text_title"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_setting_show_ico"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@drawable/card_bottom_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="桌面图标隐藏/显示"
+                    android:textColor="@color/color_text_value"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/card_top_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="鹅群"
+                    android:textColor="@color/color_text_title"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_link_qqGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@drawable/card_bottom_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="634175178"
+                    android:textColor="@color/color_text_value"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -1,10 +1,14 @@
 package top.imlk.undo.proxy;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.graphics.Rect;
+import android.os.Build;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import top.imlk.undo.R;
@@ -16,13 +20,14 @@ import top.imlk.undo.undoUtil.IUndoManager;
  * Created by imlk on 2018/3/15.
  */
 
-public class IActionModeCallbackProxy implements ActionMode.Callback {
+@TargetApi(Build.VERSION_CODES.M)
+public class IActionModeCallbackProxy extends ActionMode.Callback2 {
 
-    private ActionMode.Callback mCallback;
+    private ActionMode.Callback mWrappedCallback;
     private EditText mEditText;
 
     public IActionModeCallbackProxy(ActionMode.Callback mCallback, EditText mEditText) {
-        this.mCallback = mCallback;
+        this.mWrappedCallback = mCallback;
         this.mEditText = mEditText;
     }
 
@@ -32,7 +37,7 @@ public class IActionModeCallbackProxy implements ActionMode.Callback {
 
         IUndoManager iUndoManager = IUndoManager.getIUndoManager(this.mEditText);
 
-        boolean b1 = mCallback.onCreateActionMode(mode, menu);
+        boolean b1 = mWrappedCallback.onCreateActionMode(mode, menu);
         boolean b2, b3;
 
         //由于第三方rom的修改，这里取消了取用系统字符串的做法
@@ -83,7 +88,7 @@ public class IActionModeCallbackProxy implements ActionMode.Callback {
 
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        return mCallback.onPrepareActionMode(mode, menu);
+        return mWrappedCallback.onPrepareActionMode(mode, menu);
     }
 
     @Override
@@ -99,11 +104,24 @@ public class IActionModeCallbackProxy implements ActionMode.Callback {
                 IUndoManager.getIUndoManager(this.mEditText).performRedo();
                 return true;
         }
-        return mCallback.onActionItemClicked(mode, item);
+        return mWrappedCallback.onActionItemClicked(mode, item);
     }
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-        mCallback.onDestroyActionMode(mode);
+        mWrappedCallback.onDestroyActionMode(mode);
     }
+
+    @Override
+    public void onGetContentRect(ActionMode mode, View view, Rect outRect) {
+        // 设置悬浮窗位置
+
+        // copy from com.android.internal.policy.DecorView (SDK 25)
+        if (this.mWrappedCallback instanceof ActionMode.Callback2) {
+            ((ActionMode.Callback2) this.mWrappedCallback).onGetContentRect(mode, view, outRect);
+        } else {
+            super.onGetContentRect(mode, view, outRect);
+        }
+    }
+
 }

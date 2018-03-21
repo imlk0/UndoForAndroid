@@ -6,7 +6,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 
-import top.imlk.undo.R;
+import top.imlk.undo.holder.ITag;
 import top.imlk.undo.undoUtil.IUndoManager;
 import top.imlk.undo.undoUtil.IUndoOperation;
 
@@ -24,9 +24,9 @@ public class ITextChangedListener implements TextWatcher {
 
 
     private boolean shouldDo() {
-        Object o = mEditText.getTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG);
+        Object o = mEditText.getTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG);
         if (o == null) {
-            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
+            mEditText.setTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
             return true;
         }
 

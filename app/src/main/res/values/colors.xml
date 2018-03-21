@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#868686</color>
-    <color name="colorPrimaryDark">#6c6c6c</color>
+    <color name="colorPrimaryDark">#5c5c5c</color>
     <color name="colorAccent">#868686</color>
     <color name="elevation">#dcdcdc</color>
     <color name="color_text_title">#777777</color>
     <color name="color_layout_bg">#eeeeee</color>
     <color name="color_title_bg">#e5e5e5</color>
     <color name="color_text_value">#424242</color>
+    <color name="color_text_value_pressed">#dcdcdc</color>
+
 </resources>

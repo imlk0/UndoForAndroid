@@ -21,7 +21,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
-import top.imlk.undo.R;
+import top.imlk.undo.holder.ITag;
 import top.imlk.undo.proxy.IActionModeCallbackProxy;
 import top.imlk.undo.holder.IResources;
 import top.imlk.undo.listener.ITextChangedListener;
@@ -63,11 +63,11 @@ public class Injecter implements IXposedHookLoadPackage, IXposedHookZygoteInit, 
                 super.afterHookedMethod(param);
 
                 //TODO change ID from 7f to 77
-                if ((((EditText) param.thisObject).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG) == null)
-                        || (!(((EditText) param.thisObject).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG) instanceof Boolean))
-                        || (!((Boolean) ((EditText) param.thisObject).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG)).booleanValue())) {
+                if ((((EditText) param.thisObject).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG) == null)
+                        || (!(((EditText) param.thisObject).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG) instanceof Boolean))
+                        || (!((Boolean) ((EditText) param.thisObject).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG)).booleanValue())) {
                     ((EditText) param.thisObject).addTextChangedListener(new ITextChangedListener(((EditText) param.thisObject)));
-                    ((EditText) param.thisObject).setTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG, true);
+                    ((EditText) param.thisObject).setTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG, true);
 
                 }
             }
@@ -86,9 +86,9 @@ public class Injecter implements IXposedHookLoadPackage, IXposedHookZygoteInit, 
 //                Log.e("Injecter", "beforeHookedMethod");
                     if (param.thisObject instanceof EditText) {
                         if ((!(param.args[0] instanceof IActionModeCallbackProxy))
-                                && (((EditText) param.thisObject).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG) != null)
-                                && (((EditText) param.thisObject).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG) instanceof Boolean)
-                                && ((Boolean) ((EditText) param.thisObject).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG)).booleanValue()) {
+                                && (((EditText) param.thisObject).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG) != null)
+                                && (((EditText) param.thisObject).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG) instanceof Boolean)
+                                && ((Boolean) ((EditText) param.thisObject).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG)).booleanValue()) {
                             param.args[0] = new IActionModeCallbackProxy((ActionMode.Callback) param.args[0], ((EditText) param.thisObject));
                         }
                     }
@@ -162,14 +162,14 @@ public class Injecter implements IXposedHookLoadPackage, IXposedHookZygoteInit, 
                     Object editText = IMember.FIELD.Editor_mTextView_Field.get(IMember.FIELD.ActionPopupWindow_this$0_Field.get(param.thisObject));
 
                     if (editText instanceof EditText
-                            && (((EditText) editText).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG) != null)
-                            && ((((EditText) editText).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG) instanceof Boolean))
-                            && ((Boolean) ((EditText) editText).getTag(R.id.TOP_IMLK_UNDO_INJECTED_TAG)).booleanValue()) {
+                            && (((EditText) editText).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG) != null)
+                            && ((((EditText) editText).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG) instanceof Boolean))
+                            && ((Boolean) ((EditText) editText).getTag(ITag.TOP_IMLK_UNDO_INJECTED_TAG)).booleanValue()) {
 
                         IActionPopupWindowProxy iActionPopupWindowProxy = new IActionPopupWindowProxy(((EditText) editText));
                         iActionPopupWindowProxy.initContentView(param.thisObject);
 
-                        ((EditText) editText).setTag(R.id.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG, iActionPopupWindowProxy);
+                        ((EditText) editText).setTag(ITag.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG, iActionPopupWindowProxy);
                     } else {
                         Log.e("Undo", "un suit View");
                     }
@@ -190,11 +190,11 @@ public class Injecter implements IXposedHookLoadPackage, IXposedHookZygoteInit, 
 
 
                     if (editText instanceof EditText
-                            && ((EditText) editText).getTag(R.id.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG) != null
-                            && ((EditText) editText).getTag(R.id.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG) instanceof IActionPopupWindowProxy) {
+                            && ((EditText) editText).getTag(ITag.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG) != null
+                            && ((EditText) editText).getTag(ITag.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG) instanceof IActionPopupWindowProxy) {
 
                         Log.e("Undo", "before show Proxy");
-                        ((IActionPopupWindowProxy) ((EditText) editText).getTag(R.id.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG)).show(param.thisObject);
+                        ((IActionPopupWindowProxy) ((EditText) editText).getTag(ITag.TOP_IMLK_UNDO_IACTIONPOPUPWINDOWPROXY_TAG)).show(param.thisObject);
 
 
                         param.setResult(null);

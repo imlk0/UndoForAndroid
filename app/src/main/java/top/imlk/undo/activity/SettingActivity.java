@@ -2,6 +2,7 @@ package top.imlk.undo.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.didikee.donate.AlipayDonate;
@@ -43,15 +44,16 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         }
 
         ((TextView) findViewById(R.id.tv_title_donate)).setText(randomString());
-//        ((TextView) findViewById(R.id.tv_setting_show_ico)).setText(icoStatus());
+        ((TextView) findViewById(R.id.tv_setting_show_ico)).setText(icoStatus());
 
         findViewById(R.id.tv_version).setOnClickListener(this);
         findViewById(R.id.tv_author_imlk).setOnClickListener(this);
         findViewById(R.id.tv_author_pdc).setOnClickListener(this);
         findViewById(R.id.tv_donate_wechat).setOnClickListener(this);
         findViewById(R.id.tv_donate_alipay).setOnClickListener(this);
-//        findViewById(R.id.tv_setting_show_ico).setOnClickListener(this);
+        findViewById(R.id.tv_setting_show_ico).setOnClickListener(this);
         findViewById(R.id.tv_link_github).setOnClickListener(this);
+        findViewById(R.id.tv_link_qqGroup).setOnClickListener(this);
         findViewById(R.id.tv_link_github_license).setOnClickListener(this);
 
 
@@ -70,18 +72,18 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         return strings[((int) (strings.length * Math.random())) % strings.length];
     }
 
-//    public String icoStatus() {
-//        if (getPackageManager().getComponentEnabledSetting(getComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
-//            return "点击在启动器中隐藏应用图标";
-//        } else {
-//            return "点击在启动器中显示应用图标";
-//        }
-//    }
+    public String icoStatus() {
+        if (getPackageManager().getComponentEnabledSetting(getAliseComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+            return "点击隐藏应用图标";
+        } else {
+            return "点击显示应用图标";
+        }
+    }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        switch (v.getId()) {
+        switch (view.getId()) {
             case R.id.tv_version:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coolapk.com/apk/top.imlk.undo")));
                 break;
@@ -110,13 +112,23 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 Toast.makeText(SettingActivity.this, "蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT);
                 break;
 
-//            case R.id.tv_setting_show_ico:
-//                if (getPackageManager().getComponentEnabledSetting(getComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
-//                    getPackageManager().setComponentEnabledSetting(getComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER, PackageManager.DONT_KILL_APP);
-//                } else {
-//                    getPackageManager().setComponentEnabledSetting(getComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
-//                }
-//                break;
+            case R.id.tv_setting_show_ico:
+                if (getPackageManager().getComponentEnabledSetting(getAliseComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+                    getPackageManager().setComponentEnabledSetting(getAliseComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+                } else {
+                    getPackageManager().setComponentEnabledSetting(getAliseComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
+                }
+                ((TextView) view).setText(icoStatus());
+                break;
+            case R.id.tv_link_qqGroup:
+                Intent intent = new Intent();
+                intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dt3KJwqRiDDvuu8hCIY7Ku0cEZIXkRCKE"));
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(SettingActivity.this, "拉起QQ失败emmmm", Toast.LENGTH_SHORT);
+                }
+                break;
             case R.id.tv_link_github:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid")));
                 break;
@@ -126,6 +138,10 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         }
     }
 
+
+    private ComponentName getAliseComponentName() {
+        return new ComponentName(SettingActivity.this, "top.imlk.undo.hooker.Injecter");
+    }
 
     private void checkPermissions() {
 

@@ -5,7 +5,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-import top.imlk.undo.R;
+import top.imlk.undo.holder.ITag;
 
 
 public class IUndoManager {
@@ -18,11 +18,11 @@ public class IUndoManager {
     private EditText mEditText;
 
     public static IUndoManager getIUndoManager(EditText editText) {
-        if (editText.getTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG) == null || (!(editText.getTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG) instanceof IUndoManager))) {
-            editText.setTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG, new IUndoManager(editText));
+        if (editText.getTag(ITag.TOP_IMLK_UNDO_IUNDOMANAGER_TAG) == null || (!(editText.getTag(ITag.TOP_IMLK_UNDO_IUNDOMANAGER_TAG) instanceof IUndoManager))) {
+            editText.setTag(ITag.TOP_IMLK_UNDO_IUNDOMANAGER_TAG, new IUndoManager(editText));
         }
 
-        return (IUndoManager) editText.getTag(R.id.TOP_IMLK_UNDO_IUNDOMANAGER_TAG);
+        return (IUndoManager) editText.getTag(ITag.TOP_IMLK_UNDO_IUNDOMANAGER_TAG);
     }
 
     public IUndoManager(EditText mEditText) {
@@ -41,7 +41,7 @@ public class IUndoManager {
         if (canPerformUndo()) {
             IUndoOperation iUndoOperation = undoOperations.get(undoOperations.size() - 1);
 
-            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
+            mEditText.setTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
             while (iUndoOperation != null) {
                 undoOperations.remove(undoOperations.size() - 1);
                 redoOperations.add(iUndoOperation);
@@ -54,7 +54,7 @@ public class IUndoManager {
 
             this.mEditText.setSelection(iUndoOperation.start + iUndoOperation.oldString.length());
 
-            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
+            mEditText.setTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
         }
     }
 
@@ -62,7 +62,7 @@ public class IUndoManager {
         if (canPerformRedo()) {
             IUndoOperation iUndoOperation = redoOperations.get(redoOperations.size() - 1);
 
-            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
+            mEditText.setTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
             while (iUndoOperation != null) {
                 redoOperations.remove(redoOperations.size() - 1);
                 undoOperations.add(iUndoOperation);
@@ -75,7 +75,7 @@ public class IUndoManager {
             iUndoOperation = undoOperations.get(undoOperations.size() - 1);
             this.mEditText.setSelection(iUndoOperation.start + iUndoOperation.newString.length());
 
-            mEditText.setTag(R.id.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
+            mEditText.setTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG, true);
 
         }
     }

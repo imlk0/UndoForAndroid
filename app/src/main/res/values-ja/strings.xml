@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Undo</string>
+    <string name="undo">元に戻す</string>
+    <string name="redo">やり直し</string>
+</resources>

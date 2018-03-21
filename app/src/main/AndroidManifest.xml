@@ -8,24 +8,54 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <!--<activity android:name=".activity.SettingActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+
+        <!--隐藏桌面图标方法 参考：http://blog.csdn.net/qq_18252605/article/details/74171088-->
+        <!--实际使用时 activity-alias 的 name属性必须是一个存在的类，根据Android官方文档，这个名称并没有实际意义，
+       只起标识作用：参考https://developer.android.com/guide/topics/manifest/activity-alias-element.html-->
+
+
+        <!-- 这个activity可以被Xposed Installer启动 -->
+        <activity
+            android:name=".activity.SettingActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
+            </intent-filter>
+        </activity>
+
+
+        <!-- 默认启动activity，我们在程序中就是禁用了此activity，隐藏了桌面图标 -->
+        <activity-alias
+            android:name=".hooker.Injecter"
+            android:enabled="true"
+            android:targetActivity=".activity.SettingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="Undo" />
+            android:value="Undo - 为你的输入框增加撤销/重做\ndeveloper: imlk\ncoolapk: https://www.coolapk.com/apk/top.imlk.undo" />
         <meta-data
             android:name="xposedminversion"
             android:value="36" />
-
-        <activity android:name=".activity.SettingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
 
     </application>
 

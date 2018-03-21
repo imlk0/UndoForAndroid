@@ -1,10 +1,8 @@
 package top.imlk.undo.undoUtil;
 
 
-import android.util.Log;
 import android.widget.EditText;
 
-import top.imlk.undo.R;
 
 public class IUndoOperation {
     public int start;
