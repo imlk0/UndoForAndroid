@@ -41,7 +41,7 @@ public class ITextChangedListener implements TextWatcher {
         if (shouldDo()) {
             newIUndoOperation = new IUndoOperation();
 
-            Log.e("Changed", "" + newIUndoOperation.time);
+//            Log.e("Changed", "" + newIUndoOperation.time);
 
 
             newIUndoOperation.start = start;
