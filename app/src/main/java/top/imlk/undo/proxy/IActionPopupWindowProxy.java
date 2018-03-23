@@ -20,27 +20,33 @@ import top.imlk.undo.undoUtil.IUndoManager;
  * Created by imlk on 2018/3/19.
  */
 
+//for android version under 6
 public class IActionPopupWindowProxy implements View.OnClickListener {
 
-    private TextView mUndoTextView;
-    private TextView mRedoTextView;
+    public TextView mUndoTextView;
+    public TextView mRedoTextView;
 
-    private EditText mEditText;
+    public EditText mEditText;
+
+    public IActionPopupWindowProxy() {
+    }
 
     public IActionPopupWindowProxy(EditText editText) {
         this.mEditText = editText;
     }
 
-    public void initContentView(Object param_thisObject) throws IllegalAccessException {
+    public void initContentView(Object param_thisObject) throws IllegalAccessException, InvocationTargetException {
+
         LayoutInflater inflater = (LayoutInflater) mEditText.getContext().
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         ViewGroup.LayoutParams layoutParams = ((TextView) IMember.FIELD.ActionPopupWindow_mPasteTextView_Field.get(param_thisObject)).getLayoutParams();
 
+        int index = 0;
 
         mUndoTextView = (TextView) inflater.inflate((Integer) IMember.FIELD.POPUP_TEXT_LAYOUT_Field.get(param_thisObject), null);
         mUndoTextView.setLayoutParams(layoutParams);
-        ((ViewGroup) IMember.FIELD.ActionPopupWindow_mContentView_Field.get(param_thisObject)).addView(mUndoTextView);
+        ((ViewGroup) IMember.FIELD.ActionPopupWindow_mContentView_Field.get(param_thisObject)).addView(mUndoTextView, index++);
         mUndoTextView.setText(IResources.resources.getString(R.string.undo));
         mUndoTextView.setOnClickListener(this);
         mUndoTextView.setId(R.id.menu_undo);
@@ -48,7 +54,7 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
 
         mRedoTextView = (TextView) inflater.inflate((Integer) IMember.FIELD.POPUP_TEXT_LAYOUT_Field.get(param_thisObject), null);
         mRedoTextView.setLayoutParams(layoutParams);
-        ((ViewGroup) IMember.FIELD.ActionPopupWindow_mContentView_Field.get(param_thisObject)).addView(mRedoTextView);
+        ((ViewGroup) IMember.FIELD.ActionPopupWindow_mContentView_Field.get(param_thisObject)).addView(mRedoTextView, index++);
         mRedoTextView.setText(IResources.resources.getString(R.string.redo));
         mRedoTextView.setOnClickListener(this);
         mRedoTextView.setId(R.id.menu_redo);
@@ -56,7 +62,7 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
     }
 
 
-    public void show(Object param_thisObject) throws InvocationTargetException, IllegalAccessException {
+    public void before_show(Object param_thisObject) throws InvocationTargetException, IllegalAccessException {
 
         Object editor = IMember.FIELD.ActionPopupWindow_this$0_Field.get(param_thisObject);
         IUndoManager iUndoManager = IUndoManager.getIUndoManager(this.mEditText);
@@ -102,6 +108,7 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
 */
 
     }
+
 
     @Override
     public void onClick(View v) {
