@@ -148,6 +148,9 @@ public class Injecter implements IXposedHookLoadPackage {
                 try {
                     IMember.FIELD.ActionPinnedPopupWindow_mMainPanel_Field = IMember.CLASS.ActionPinnedPopupWindow_Class.getDeclaredField("mMainPanel");
                     IMember.FIELD.ActionPinnedPopupWindow_mMainPanel_Field.setAccessible(true);
+                    IMember.METHOD.ActionPinnedPopupWindow_setMainPanelAsContent_Method = IMember.CLASS.ActionPinnedPopupWindow_Class.getDeclaredMethod("setMainPanelAsContent");
+                    IMember.METHOD.ActionPinnedPopupWindow_setMainPanelAsContent_Method.setAccessible(true);
+
                 } catch (NoSuchFieldException e) {
                     Log.e("Undo", "isOldMIUI");
                     osType = OsType.MIUI_OLD;
@@ -163,9 +166,6 @@ public class Injecter implements IXposedHookLoadPackage {
 
                 IMember.METHOD.ActionPopupWindow_newTextView_Method = IMember.CLASS.ActionPopupWindow_Class.getDeclaredMethod("newTextView");
                 IMember.METHOD.ActionPopupWindow_newTextView_Method.setAccessible(true);
-                IMember.METHOD.ActionPinnedPopupWindow_setMainPanelAsContent_Method = IMember.CLASS.ActionPinnedPopupWindow_Class.getDeclaredMethod("setMainPanelAsContent");
-                IMember.METHOD.ActionPinnedPopupWindow_setMainPanelAsContent_Method.setAccessible(true);
-
 
             } else {
                 IMember.FIELD.POPUP_TEXT_LAYOUT_Field = IMember.CLASS.ActionPopupWindow_Class.getDeclaredField("POPUP_TEXT_LAYOUT");
