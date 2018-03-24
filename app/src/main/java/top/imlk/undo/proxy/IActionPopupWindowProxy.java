@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
 
+import de.robv.android.xposed.XposedBridge;
 import top.imlk.undo.R;
 import top.imlk.undo.holder.IMember;
 import top.imlk.undo.holder.IResources;
+import top.imlk.undo.holder.Iid;
 import top.imlk.undo.undoUtil.IUndoManager;
 
 /**
@@ -35,7 +37,7 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
         this.mEditText = editText;
     }
 
-    public void initContentView(Object param_thisObject) throws IllegalAccessException, InvocationTargetException {
+    public boolean initContentView(Object param_thisObject) throws IllegalAccessException, InvocationTargetException {
 
         LayoutInflater inflater = (LayoutInflater) mEditText.getContext().
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,7 +51,7 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
         ((ViewGroup) IMember.FIELD.ActionPopupWindow_mContentView_Field.get(param_thisObject)).addView(mUndoTextView, index++);
         mUndoTextView.setText(IResources.resources.getString(R.string.undo));
         mUndoTextView.setOnClickListener(this);
-        mUndoTextView.setId(R.id.menu_undo);
+        mUndoTextView.setId(Iid.menu_undo);
 
 
         mRedoTextView = (TextView) inflater.inflate((Integer) IMember.FIELD.POPUP_TEXT_LAYOUT_Field.get(param_thisObject), null);
@@ -57,12 +59,16 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
         ((ViewGroup) IMember.FIELD.ActionPopupWindow_mContentView_Field.get(param_thisObject)).addView(mRedoTextView, index++);
         mRedoTextView.setText(IResources.resources.getString(R.string.redo));
         mRedoTextView.setOnClickListener(this);
-        mRedoTextView.setId(R.id.menu_redo);
+        mRedoTextView.setId(Iid.menu_redo);
 
+        return true;
     }
 
 
     public void before_show(Object param_thisObject) throws InvocationTargetException, IllegalAccessException {
+        //用反射重写了原来的show
+
+//        XposedBridge.log(new Throwable());
 
         Object editor = IMember.FIELD.ActionPopupWindow_this$0_Field.get(param_thisObject);
         IUndoManager iUndoManager = IUndoManager.getIUndoManager(this.mEditText);
@@ -80,10 +86,16 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
 
         if (!canPaste && !canSuggest && !canUndo && !canRedo) return;
 
+        super_show(param_thisObject);
+    }
+
+
+    public void super_show(Object param_thisObject) throws InvocationTargetException, IllegalAccessException {
 
 //        IMember.METHOD.PinnedPopupWindow_show_Method.invoke(param_thisObject);//错误的表达
 
 
+        Object editor = IMember.FIELD.ActionPopupWindow_this$0_Field.get(param_thisObject);
         Object positionListener = IMember.METHOD.Editor_getPositionListener_Method.invoke(editor);
         IMember.METHOD.PositionListener_addSubscriber_Method.invoke(positionListener, param_thisObject, false);
 
@@ -106,7 +118,6 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
 
         super.show();
 */
-
     }
 
 
@@ -114,11 +125,11 @@ public class IActionPopupWindowProxy implements View.OnClickListener {
     public void onClick(View v) {
 //        Debug.waitForDebugger();
         switch (v.getId()) {
-            case R.id.menu_undo:
+            case Iid.menu_undo:
                 Log.e("IAMCallbackProxy", "performUndo");
                 IUndoManager.getIUndoManager(this.mEditText).performUndo();
                 break;
-            case R.id.menu_redo:
+            case Iid.menu_redo:
                 Log.e("IAMCallbackProxy", "performRedo");
                 IUndoManager.getIUndoManager(this.mEditText).performRedo();
                 break;

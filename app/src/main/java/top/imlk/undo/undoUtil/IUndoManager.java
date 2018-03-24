@@ -13,7 +13,7 @@ public class IUndoManager {
     private ArrayList<IUndoOperation> undoOperations = new ArrayList<>();
     private ArrayList<IUndoOperation> redoOperations = new ArrayList<>();
 
-    private final static String IUNDOMANAGER_TAG = "TOP_IMLK_UNDO_IUNDOMANAGER_TAG";
+//    private final static String IUNDOMANAGER_TAG = "TOP_IMLK_UNDO_IUNDOMANAGER_TAG";
 
     private EditText mEditText;
 
@@ -42,7 +42,7 @@ public class IUndoManager {
             IUndoOperation iUndoOperation = undoOperations.get(undoOperations.size() - 1);
 
             mEditText.setTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
-            while (iUndoOperation != null) {
+            while (iUndoOperation != null && canPerformUndo()) {
                 undoOperations.remove(undoOperations.size() - 1);
                 redoOperations.add(iUndoOperation);
                 iUndoOperation.undo(this.mEditText);
@@ -63,7 +63,7 @@ public class IUndoManager {
             IUndoOperation iUndoOperation = redoOperations.get(redoOperations.size() - 1);
 
             mEditText.setTag(ITag.TOP_IMLK_UNDO_SHOULDDO_TAG, false);
-            while (iUndoOperation != null) {
+            while (iUndoOperation != null && canPerformRedo()) {
                 redoOperations.remove(redoOperations.size() - 1);
                 undoOperations.add(iUndoOperation);
                 iUndoOperation.redo(this.mEditText);

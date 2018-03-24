@@ -14,6 +14,7 @@ public class IMember {
         public static Class ActionPopupWindow_Class;
         public static Class PinnedPopupWindow_Class;
         public static Class ActionPinnedPopupWindow_Class;//MIUI
+        public static Class FloatPanelView_Class;//MIUI
         public static Class PositionListener_Class;
         public static Class TextViewPositionListener_Class;
 
@@ -26,7 +27,9 @@ public class IMember {
         public static Field ActionPopupWindow_mPasteTextView_Field;
         public static Field ActionPopupWindow_mReplaceTextView_Field;
         public static Field ActionPinnedPopupWindow_mMainPanel_Field;//MIUI
-        public static Field ActionPinnedPopupWindow_mVisibleChildren_Field;//MIUI
+        public static Field ActionPinnedPopupWindow_mPanel_Field;//MIUI
+        public static Field FloatPanelView_mContent_Field;//MIUI
+//        public static Field ActionPinnedPopupWindow_mVisibleChildren_Field;//MIUI
         public static Field ActionPopupWindow_mContentView_Field;
         public static Field Editor_mTextView_Field;
 
@@ -45,7 +48,7 @@ public class IMember {
         public static Method PinnedPopupWindow_computeLocalPosition_Method;
         public static Method PinnedPopupWindow_updatePosition_Method;
         public static Method ActionPopupWindow_newTextView_Method;//MIUI
-        public static Method ActionPinnedPopupWindow_setMainPanelAsContent_Method;//MIUI
+        public static Method ActionPinnedPopupWindow_setMainPanelAsContent_Method;//new_MIUI
 
     }
 }

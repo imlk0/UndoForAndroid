@@ -14,6 +14,7 @@ import android.widget.EditText;
 import top.imlk.undo.R;
 
 import top.imlk.undo.holder.IResources;
+import top.imlk.undo.holder.Iid;
 import top.imlk.undo.undoUtil.IUndoManager;
 
 /**
@@ -41,13 +42,13 @@ public class IActionModeCallbackProxy extends ActionMode.Callback2 {
         boolean b2, b3;
 
         //由于第三方rom的修改，这里取消了取用系统字符串的做法
-        menu.add(Menu.NONE, R.id.menu_undo, 2, IResources.resources.getString(R.string.undo))
+        menu.add(Menu.NONE, Iid.menu_undo, 2, IResources.resources.getString(R.string.undo))
 //                mEditText.getResources().getSystem().getIdentifier("undo", "string", "android"))
                 .setAlphabeticShortcut('z')
                 .setEnabled(b2 = iUndoManager.canPerformUndo())
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-        menu.add(Menu.NONE, R.id.menu_redo, 3, IResources.resources.getString(R.string.redo))
+        menu.add(Menu.NONE, Iid.menu_redo, 3, IResources.resources.getString(R.string.redo))
 //                mEditText.getResources().getSystem().getIdentifier("redo", "string", "android"))
                 .setEnabled(b3 = iUndoManager.canPerformRedo())
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -67,10 +68,10 @@ public class IActionModeCallbackProxy extends ActionMode.Callback2 {
 //            method.invoke(mode.getMenuInflater(), parser, attrs, menu);
 //
 //            if (!IUndoManager.getIUndoManager(this.mEditText).canPerformUndo()) {
-//                menu.removeItem(R.id.menu_undo);
+//                menu.removeItem(Iid.menu_undo);
 //            }
 //            if (!IUndoManager.getIUndoManager(this.mEditText).canPerformRedo()) {
-//                menu.removeItem(R.id.menu_redo);
+//                menu.removeItem(Iid.menu_redo);
 //            }
 //
 //
@@ -94,12 +95,12 @@ public class IActionModeCallbackProxy extends ActionMode.Callback2 {
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_undo:
+            case Iid.menu_undo:
                 Log.e("IAMCallbackProxy", "performUndo");
                 IUndoManager.getIUndoManager(this.mEditText).performUndo();
                 return true;
 
-            case R.id.menu_redo:
+            case Iid.menu_redo:
                 Log.e("IAMCallbackProxy", "performRedo");
                 IUndoManager.getIUndoManager(this.mEditText).performRedo();
                 return true;
