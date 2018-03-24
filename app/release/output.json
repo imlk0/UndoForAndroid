@@ -1,1 +1,18 @@
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":21},"path":"app-release.apk","properties":{"packageId":"top.imlk.undo","split":"","minSdkVersion":"14"}}]
+[
+  {
+    "outputType": {
+      "type": "APK"
+    },
+    "apkInfo": {
+      "type": "MAIN",
+      "splits": [],
+      "versionCode": 28
+    },
+    "path": "app-release.apk",
+    "properties": {
+      "packageId": "top.imlk.undo",
+      "split": "",
+      "minSdkVersion": "14"
+    }
+  }
+]
