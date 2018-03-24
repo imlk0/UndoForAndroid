@@ -6,7 +6,7 @@ android {
         applicationId "top.imlk.undo"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 28
+        versionCode 29
         versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

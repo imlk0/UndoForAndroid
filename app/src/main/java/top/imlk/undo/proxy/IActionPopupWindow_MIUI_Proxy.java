@@ -3,12 +3,10 @@ package top.imlk.undo.proxy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
 
-import de.robv.android.xposed.XposedBridge;
 import top.imlk.undo.R;
 import top.imlk.undo.holder.IMember;
 import top.imlk.undo.holder.IResources;
@@ -17,9 +15,6 @@ import top.imlk.undo.hooker.Injecter;
 import top.imlk.undo.type.OsType;
 import top.imlk.undo.undoUtil.IUndoManager;
 
-/**
- * Created by imlk on 2018/3/19.
- */
 
 //for miui
 
