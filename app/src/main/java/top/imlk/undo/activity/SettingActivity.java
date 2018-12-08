@@ -101,7 +101,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 WeiXinDonate.saveDonateQrImage2SDCard(qrPath, BitmapFactory.decodeStream(weixinQrIs));
                 WeiXinDonate.donateViaWeiXin(this, qrPath);
 
-                Toast.makeText(SettingActivity.this, "请从相册选择收款码，蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT);
+                Toast.makeText(SettingActivity.this, "请从相册选择收款码，蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.tv_donate_alipay:
@@ -109,7 +109,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 if (hasInstalledAlipayClient) {
                     AlipayDonate.startAlipayClient(this, "FKX093049UCVM4EEN8WV84");
                 }
-                Toast.makeText(SettingActivity.this, "蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT);
+                Toast.makeText(SettingActivity.this, "蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.tv_setting_show_ico:
@@ -126,7 +126,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 try {
                     startActivity(intent);
                 } catch (Exception e) {
-                    Toast.makeText(SettingActivity.this, "拉起QQ失败emmmm", Toast.LENGTH_SHORT);
+                    Toast.makeText(SettingActivity.this, "拉起QQ失败emmmm", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.tv_link_github:
