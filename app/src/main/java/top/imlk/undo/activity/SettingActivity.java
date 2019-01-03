@@ -1,8 +1,8 @@
 package top.imlk.undo.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.didikee.donate.AlipayDonate;
@@ -12,130 +12,212 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.danielstone.materialaboutlibrary.ConvenienceBuilder;
+import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
+import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
+import com.danielstone.materialaboutlibrary.items.MaterialAboutItemOnClickAction;
+import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
+import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
+import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import java.io.File;
 import java.io.InputStream;
 
+import top.imlk.undo.BuildConfig;
 import top.imlk.undo.R;
 
-public class SettingActivity extends Activity implements View.OnClickListener {
+public class SettingActivity extends MaterialAboutActivity {
 
+
+    @NonNull
+    @Override
+    protected MaterialAboutList getMaterialAboutList(@NonNull final Context context) {
+        int icoColor = ContextCompat.getColor(context, R.color.ico);
+        int icoSizeDp = 18;
+        return new MaterialAboutList.Builder()
+                .addCard(new MaterialAboutCard.Builder()
+                        .addItem(
+                                new MaterialAboutTitleItem.Builder()
+                                        .icon(R.mipmap.ic_launcher)
+                                        .text(R.string.about_title_undo)
+                                        .desc(R.string.about_title_desc)
+                                        .build()
+                        )
+                        .addItem(
+                                ConvenienceBuilder.createVersionActionItem(
+                                        context,
+                                        new IconicsDrawable(context, CommunityMaterial.Icon2.cmd_information_outline).color(icoColor).sizeDp(icoSizeDp),
+                                        getString(R.string.version),
+                                        true
+                                ).setOnClickAction(() -> {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://repo.xposed.info/module/top.imlk.undo")));
+                                })
+                        )
+                        .addItem(
+                                new MaterialAboutActionItem.Builder()
+                                        .icon(new IconicsDrawable(context, CommunityMaterial.Icon.cmd_book).color(icoColor).sizeDp(icoSizeDp))
+                                        .text(R.string.license)
+                                        .subText(R.string.subtext_license)
+                                        .setOnClickAction(() -> {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid/blob/master/LICENSE")));
+                                        })
+                                        .build()
+                        )
+                        .build()
+                )
+                .addCard(new MaterialAboutCard.Builder()
+                        .title(R.string.settings)
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .icon(new IconicsDrawable(context, CommunityMaterial.Icon.cmd_file_hidden).color(icoColor).sizeDp(icoSizeDp))
+                                .text(R.string.hide_or_show_ico)
+                                .setOnClickAction(new MaterialAboutItemOnClickAction() {
+                                    @Override
+                                    public void onClick() {
+                                        getPackageManager().setComponentEnabledSetting(getAliseComponentName(), isIcoShownOnLauncher() ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
+                                        Toast.makeText(context, isIcoShownOnLauncher() ? getString(R.string.ico_show) : getString(R.string.ico_hide), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .build()
+                        )
+                        .build()
+                )
+
+                .addCard(new MaterialAboutCard.Builder()
+                        .title(R.string.donate)
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text(R.string.alipay)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon2.cmd_pine_tree).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(this::alipaypay)
+                                .build()
+                        )
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text(R.string.wechat)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon2.cmd_wechat).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(this::wechatpay)
+                                .build()
+                        )
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text(R.string.paypal)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon2.cmd_paypal).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(this::paypalpay)
+                                .build()
+                        )
+                        .build()
+
+                )
+                .addCard(new MaterialAboutCard.Builder()
+                        .title(R.string.developers)
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text("imlk")
+                                .subText(R.string.developer)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon.cmd_code_braces).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(() -> {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.coolapk.com/u/477017")));
+                                })
+                                .build()
+                        )
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text("pandecheng")
+                                .subText(R.string.ico_designer)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon2.cmd_palette).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(() -> {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.coolapk.com/u/531994")));
+                                })
+                                .build()
+                        )
+                        .build()
+                )
+                .addCard(new MaterialAboutCard.Builder()
+                        .title(R.string.links)
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text(R.string.coolapk)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon.cmd_android_head).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(() -> {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coolapk.com/apk/top.imlk.undo")));
+                                })
+                                .build()
+                        )
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text(R.string.qq_group)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon2.cmd_qqchat).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(() -> {
+                                    Intent intent = new Intent();
+                                    intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dt3KJwqRiDDvuu8hCIY7Ku0cEZIXkRCKE"));
+                                    try {
+                                        startActivity(intent);
+                                    } catch (Exception e) {
+                                        Toast.makeText(SettingActivity.this, R.string.error_wake_up_qq, Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .build()
+                        )
+                        .addItem(new MaterialAboutActionItem.Builder()
+                                .text(R.string.github)
+                                .icon(new IconicsDrawable(context).icon(CommunityMaterial.Icon.cmd_github_circle).color(icoColor).sizeDp(icoSizeDp))
+                                .setOnClickAction(() -> {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid")));
+                                })
+                                .build()
+                        )
+                        .build()
+                )
+                .build();
+
+    }
+
+    private void wechatpay() {
+
+        if (!checkPermissions()) {
+            return;
+        }
+
+        InputStream weixinQrIs = getResources().openRawResource(R.raw.donate_wechat);
+        String qrPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + BuildConfig.APPLICATION_ID + File.separator +
+                "imlk_weixin.png";
+        WeiXinDonate.saveDonateQrImage2SDCard(qrPath, BitmapFactory.decodeStream(weixinQrIs));
+        WeiXinDonate.donateViaWeiXin(this, qrPath);
+
+        Toast.makeText(SettingActivity.this, R.string.donate_wechat_thx, Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void alipaypay() {
+        boolean hasInstalledAlipayClient = AlipayDonate.hasInstalledAlipayClient(this);
+        if (hasInstalledAlipayClient) {
+            AlipayDonate.startAlipayClient(this, "FKX093049UCVM4EEN8WV84");
+        }
+        Toast.makeText(SettingActivity.this, R.string.donate_alipay_thx, Toast.LENGTH_SHORT).show();
+    }
+
+    private void paypalpay() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.me/imlk77")));
+        Toast.makeText(this, R.string.donate_paypal_thx, Toast.LENGTH_LONG).show();
+    }
+
+    @Nullable
+    @Override
+    protected CharSequence getActivityTitle() {
+        return getString(R.string.app_name);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-
-        checkPermissions();
-
-        try {
-            ((TextView) findViewById(R.id.tv_version)).setText(getApplication().getPackageManager().getPackageInfo(getPackageName(), 0).versionName + "(" + getApplication().getPackageManager().getPackageInfo(getPackageName(), 0).versionCode + ")");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ((TextView) findViewById(R.id.tv_title_donate)).setText(randomString());
-        ((TextView) findViewById(R.id.tv_setting_show_ico)).setText(icoStatus());
-
-        findViewById(R.id.tv_version).setOnClickListener(this);
-        findViewById(R.id.tv_author_imlk).setOnClickListener(this);
-        findViewById(R.id.tv_author_pdc).setOnClickListener(this);
-        findViewById(R.id.tv_donate_wechat).setOnClickListener(this);
-        findViewById(R.id.tv_donate_alipay).setOnClickListener(this);
-        findViewById(R.id.tv_setting_show_ico).setOnClickListener(this);
-        findViewById(R.id.tv_link_github).setOnClickListener(this);
-        findViewById(R.id.tv_link_qqGroup).setOnClickListener(this);
-        findViewById(R.id.tv_link_github_license).setOnClickListener(this);
-
 
     }
 
-    public String randomString() {
-        String[] strings = {"学生党苦逼啊(ง •_•)ง",
-                "我手机很旧了，能支持我换新吗( •̀ ω •́ )✧",
-                "施主，能给点钱吗(。_。)",
-                "苦逼开发者求喂养(ง •_•)ง",
-                "我没有钱钱( $ _ $ )",
-                "我想吃零食(。・∀・)ノ",
-                "给咸鱼一点动力吧( •̀ ω •́ )y",
-                "拯救秃头程序员〒▽〒"};
-
-        return strings[((int) (strings.length * Math.random())) % strings.length];
-    }
-
-    public String icoStatus() {
-        if (getPackageManager().getComponentEnabledSetting(getAliseComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
-            return "点击隐藏应用图标";
-        } else {
-            return "点击显示应用图标";
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        switch (view.getId()) {
-            case R.id.tv_version:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coolapk.com/apk/top.imlk.undo")));
-                break;
-            case R.id.tv_author_imlk:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.coolapk.com/u/477017")));
-                break;
-            case R.id.tv_author_pdc:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.coolapk.com/u/531994")));
-                break;
-            case R.id.tv_donate_wechat:
-
-                InputStream weixinQrIs = getResources().openRawResource(R.raw.donate_wechat);
-                String qrPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + "Undo" + File.separator +
-                        "imlk_weixin.png";
-                WeiXinDonate.saveDonateQrImage2SDCard(qrPath, BitmapFactory.decodeStream(weixinQrIs));
-                WeiXinDonate.donateViaWeiXin(this, qrPath);
-
-                Toast.makeText(SettingActivity.this, "请从相册选择收款码，蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT).show();
-
-                break;
-            case R.id.tv_donate_alipay:
-                boolean hasInstalledAlipayClient = AlipayDonate.hasInstalledAlipayClient(this);
-                if (hasInstalledAlipayClient) {
-                    AlipayDonate.startAlipayClient(this, "FKX093049UCVM4EEN8WV84");
-                }
-                Toast.makeText(SettingActivity.this, "蟹蟹，你的鼓励是我的最大动力", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.tv_setting_show_ico:
-                if (getPackageManager().getComponentEnabledSetting(getAliseComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
-                    getPackageManager().setComponentEnabledSetting(getAliseComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-                } else {
-                    getPackageManager().setComponentEnabledSetting(getAliseComponentName(), PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
-                }
-                ((TextView) view).setText(icoStatus());
-                break;
-            case R.id.tv_link_qqGroup:
-                Intent intent = new Intent();
-                intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dt3KJwqRiDDvuu8hCIY7Ku0cEZIXkRCKE"));
-                try {
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Toast.makeText(SettingActivity.this, "拉起QQ失败emmmm", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.tv_link_github:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid")));
-                break;
-            case R.id.tv_link_github_license:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KB5201314/UndoForAndroid/blob/master/LICENSE")));
-                break;
-        }
+    public boolean isIcoShownOnLauncher() {
+        return getPackageManager().getComponentEnabledSetting(getAliseComponentName()) == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
     }
 
 
@@ -143,20 +225,20 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         return new ComponentName(SettingActivity.this, "top.imlk.undo.hooker.Injecter");
     }
 
-    private void checkPermissions() {
-
+    private boolean checkPermissions() {
 
         int permission_0 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
         int permission_1 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int permission_2 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+//        int permission_2 = ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
 
-        if (permission_0 != PackageManager.PERMISSION_GRANTED || permission_1 != PackageManager.PERMISSION_GRANTED || permission_2 != PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(SettingActivity.this, "需要读写文件权限", Toast.LENGTH_LONG).show();
+        if (permission_0 != PackageManager.PERMISSION_GRANTED || permission_1 != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(SettingActivity.this, R.string.need_permission, Toast.LENGTH_LONG).show();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS}, 1);
+                return false;
             }
-//                getPermissionByUser();
         }
+        return true;
     }
 //
 //    private void getPermissionByUser() {
@@ -171,4 +253,27 @@ public class SettingActivity extends Activity implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
     }
+
+
+    @Override
+    protected void onDestroy() {
+
+        //删除付款码
+
+        String qrPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + BuildConfig.APPLICATION_ID + File.separator +
+                "imlk_weixin.png";
+
+        File qrFile = new File(qrPath);
+        File parentFile = qrFile.getParentFile();
+
+        if (qrFile.exists()) {
+            qrFile.delete();
+            parentFile.delete();
+        }
+
+        System.exit(0);
+        super.onDestroy();
+    }
+
 }
+

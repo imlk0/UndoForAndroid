@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Undo</string>
-    <string name="undo">撤銷</string>
-    <string name="redo">恢復</string>
+    <string name="undo">撤消</string>
+    <string name="redo">重做</string>
+
+    <string name="about_title_undo">撤消</string>
+    <string name="about_title_desc">給你的輸入框加上撤消（Ctrl-Z）選項</string>
+    <string name="version">版本</string>
+    <string name="license">開源許可</string>
+    <string name="subtext_license">GPL v3.0 ©2019 imlk</string>
+    <string name="settings">設置</string>
+    <string name="hide_or_show_ico">隱藏/顯示桌面圖標</string>
+    <string name="ico_show">圖標已顯示</string>
+    <string name="ico_hide">圖標已隱藏</string>
+    <string name="donate">捐贈</string>
+    <string name="alipay">支付寶</string>
+    <string name="wechat">微信</string>
+    <string name="paypal">Paypal</string>
+    <string name="developers">開發人員</string>
+    <string name="developer">開發者</string>
+    <string name="ico_designer">圖標設計</string>
+    <string name="links">相關鏈接</string>
+    <string name="coolapk">Coolapk</string>
+    <string name="qq_group">QQ群</string>
+    <string name="error_wake_up_qq">拉起QQ失敗</string>
+    <string name="github">Github</string>
+    <string name="donate_wechat_thx">請從相冊選擇收款碼,謝謝</string>
+    <string name="donate_alipay_thx">非常感謝</string>
+    <string name="donate_paypal_thx">非常感謝</string>
+    <string name="need_permission">需要讀寫文件的權限來釋放一張付款碼圖片</string>
+    <string name="xposed_desc">Undo - 為你的輸入框增加撤銷/重做\ndeveloper: imlk\ncoolapk: https://www.coolapk.com/apk/top.imlk.undo</string>
+
 </resources>

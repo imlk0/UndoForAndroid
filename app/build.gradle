@@ -6,8 +6,8 @@ android {
         applicationId "top.imlk.undo"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 29
-        versionName "1.0.3"
+        versionCode 30
+        versionName "1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -16,10 +16,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.github.didikee:AndroidDonate:0.1.0'
-    provided files('lib/api-82.jar')
+    implementation 'com.github.didikee:AndroidDonate:0.1.0'
+    compileOnly files('lib/api-82.jar')
+    implementation 'com.github.daniel-stoneuk:material-about-library:2.3.0'
+// https://mvnrepository.com/artifact/com.mikepenz/iconics-core
+    compile group: 'com.mikepenz', name: 'iconics-core', version: '3.0.4'
+
+    implementation 'com.mikepenz:community-material-typeface:2.7.94.1@aar'
 }

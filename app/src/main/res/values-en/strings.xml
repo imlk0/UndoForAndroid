@@ -3,4 +3,31 @@
     <string name="app_name">Undo</string>
     <string name="undo">Undo</string>
     <string name="redo">Redo</string>
+    <string name="about_title_undo">Undo</string>
+    <string name="about_title_desc">Add the undo (Ctrl-Z) option to your input box</string>
+    <string name="version">Version</string>
+    <string name="license">Open source license</string>
+    <string name="subtext_license">GPL v3.0 ©2019 imlk</string>
+    <string name="settings">Setting</string>
+    <string name="hide_or_show_ico">Hide/show desktop icon</string>
+    <string name="ico_show">Icon is displayed</string>
+    <string name="ico_hide">Icon is hidden</string>
+    <string name="donate">Donation</string>
+    <string name="alipay">Alipay</string>
+    <string name="wechat">WeChat</string>
+    <string name="paypal">Paypal</string>
+    <string name="developers">Developer</string>
+    <string name="developer">Developer</string>
+    <string name="ico_designer">Icon design</string>
+    <string name="links">Related Links</string>
+    <string name="coolapk">Coolapk</string>
+    <string name="qq_group">QQ group</string>
+    <string name="error_wake_up_qq">Pulling up QQ failed</string>
+    <string name="github">Github</string>
+    <string name="donate_wechat_thx">Please select the payment code from the album, thank you</string>
+    <string name="donate_alipay_thx">Thank you very much</string>
+    <string name="donate_paypal_thx">Thank you very much</string>
+    <string name="need_permission">Need to read and write files to release a payment code image</string>
+    <string name="xposed_desc">Undo - Add undo/redo to your input box\ndeveloper: imlk\ncoolapk: https://www.coolapk.com/apk/top.imlk.undo</string>
+
 </resources>

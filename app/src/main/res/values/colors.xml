@@ -9,5 +9,6 @@
     <color name="color_title_bg">#e5e5e5</color>
     <color name="color_text_value">#424242</color>
     <color name="color_text_value_pressed">#dcdcdc</color>
+    <color name="ico">#868686</color>
 
 </resources>

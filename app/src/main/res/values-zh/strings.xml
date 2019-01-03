@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Undo</string>
-    <string name="undo">撤销</string>
-    <string name="redo">恢复</string>
+    <string name="undo">撤消</string>
+    <string name="redo">重做</string>
+    <string name="about_title_undo">撤消</string>
+    <string name="about_title_desc">给你的输入框加上撤消（Ctrl-Z）选项</string>
+    <string name="version">版本</string>
+    <string name="license">开源许可</string>
+    <string name="subtext_license">GPL v3.0 ©2019 imlk</string>
+    <string name="settings">设置</string>
+    <string name="hide_or_show_ico">隐藏/显示桌面图标</string>
+    <string name="ico_show">图标已显示</string>
+    <string name="ico_hide">图标已隐藏</string>
+    <string name="donate">捐赠</string>
+    <string name="alipay">支付宝</string>
+    <string name="wechat">微信</string>
+    <string name="paypal">Paypal</string>
+    <string name="developers">开发人员</string>
+    <string name="developer">开发者</string>
+    <string name="ico_designer">图标设计</string>
+    <string name="links">相关链接</string>
+    <string name="coolapk">Coolapk</string>
+    <string name="qq_group">QQ群</string>
+    <string name="error_wake_up_qq">拉起QQ失败emmmm</string>
+    <string name="github">Github</string>
+    <string name="donate_wechat_thx">请从相册选择收款码，蟹蟹，你的鼓励是我的最大动力</string>
+    <string name="donate_alipay_thx">蟹蟹，你的鼓励是我的最大动力</string>
+    <string name="donate_paypal_thx">蟹蟹你的支持</string>
+    <string name="need_permission">需要读写文件的权限来释放一张付款码图片</string>
+    <string name="xposed_desc">Undo - 为你的输入框增加撤销/重做\ndeveloper: imlk\ncoolapk: https://www.coolapk.com/apk/top.imlk.undo</string>
+
 </resources>
